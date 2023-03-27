@@ -32,6 +32,7 @@ resource "google_project_iam_custom_role" "remotion_sa" {
     "run.services.create",
     "run.services.list",
     "run.services.update",
+    "storage.buckets.create",
     "storage.buckets.get",
     "storage.buckets.list",
     "storage.objects.create",
