@@ -9,8 +9,16 @@ terraform {
   required_version = ">= 1.4.1"
 }
 
+data "google_project_metadata" "project" {
+  metadata = "project-id"
+}
+
+variable "project_id" {
+  default = "${data.google_project_metadata.project.value}"
+}
+
 provider "google" {
-  project = "{{project-id}}"
+  project = var.project_id
   region  = "us-central1"
   zone    = "us-central1-c"
 }
@@ -44,13 +52,13 @@ resource "google_service_account" "remotion_sa" {
 
 # Bind the IAM role to the service account
 resource "google_project_iam_member" "remotion_sa" {
-  project = "{{project-id}}"
+  project = var.project_id
   role    = google_project_iam_custom_role.remotion_sa.id
   member  = "serviceAccount:${google_service_account.remotion_sa.email}"
 }
 
 # Enable Cloud Run API
 resource "google_project_service" "cloud_run" {
-  project = "{{project-id}}"
+  project = var.project_id
   service = "run.googleapis.com"
 }
