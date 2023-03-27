@@ -15,25 +15,10 @@ provider "google" {
   zone    = "us-central1-c"
 }
 
-# Enable required APIs
-module "project-services" {
-  source  = "terraform-google-modules/project-factory/google//modules/project_services"
-  version = "~> 14.2"
-
-  project_id = "{{project-id}}"
-
-  activate_apis = [
-    "oslogin.googleapis.com"
-  ]
-
-  disable_services_on_destroy = false
-  disable_dependent_services  = false
-}
-
 # Create an IAM role
-resource "google_project_iam_custom_role" "tf_sa_role" {
-  role_id     = "tfRemotionSA"
-  title       = "tf Remotion API Service Account"
+resource "google_project_iam_custom_role" "remotion_sa" {
+  role_id     = "RemotionSA"
+  title       = "Remotion API Service Account"
   description = "Allow the service account to manage necessary resources for Remotion Cloud Run rendering."
   permissions = [
     "iam.serviceAccounts.actAs",
@@ -52,15 +37,15 @@ resource "google_project_iam_custom_role" "tf_sa_role" {
 }
 
 # Create a service account
-resource "google_service_account" "tf_remotion_sa" {
-  account_id   = "tf-remotion-sa"
+resource "google_service_account" "remotion_sa" {
+  account_id   = "remotion-sa"
   display_name = "Remotion Service Account"
 }
 
 # Bind the IAM role to the service account
-resource "google_project_iam_member" "tf_remotion_sa" {
-  role    = google_project_iam_custom_role.tf_sa_role.id
-  member  = "serviceAccount:${google_service_account.tf_remotion_sa.email}"
+resource "google_project_iam_member" "remotion_sa" {
+  role    = google_project_iam_custom_role.remotion_sa.id
+  member  = "serviceAccount:${google_service_account.remotion_sa.email}"
 }
 
 # Enable Cloud Run API
