@@ -9,10 +9,6 @@ terraform {
   required_version = ">= 1.4.1"
 }
 
-data "google_project_metadata" "project" {
-  metadata = "project-id"
-}
-
 variable "project_id" {
   type        = string
   description = "The ID of the project in which the resources will be created."
