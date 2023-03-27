@@ -44,6 +44,7 @@ resource "google_service_account" "remotion_sa" {
 
 # Bind the IAM role to the service account
 resource "google_project_iam_member" "remotion_sa" {
+  project = "{{project-id}}"
   role    = google_project_iam_custom_role.remotion_sa.id
   member  = "serviceAccount:${google_service_account.remotion_sa.email}"
 }
