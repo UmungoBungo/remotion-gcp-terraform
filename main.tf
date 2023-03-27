@@ -14,6 +14,7 @@ variable "project_id" {
   description = "The ID of the project in which the resources will be created."
 }
 
+
 provider "google" {
   project = var.project_id
   region  = "us-central1"
@@ -60,4 +61,9 @@ resource "google_project_iam_member" "remotion_sa" {
 resource "google_project_service" "cloud_run" {
   project = var.project_id
   service = "run.googleapis.com"
+}
+
+# Output the command to generate service account keys
+output "service_account_key_generation_command" {
+  value = "gcloud iam service-accounts keys create key.json --iam-account=${google_service_account.remotion_sa.email}"
 }
