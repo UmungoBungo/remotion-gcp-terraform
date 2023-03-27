@@ -27,6 +27,7 @@ resource "google_project_iam_custom_role" "remotion_sa" {
   description = "Allow the service account to manage necessary resources for Remotion Cloud Run rendering."
   permissions = [
     "iam.serviceAccounts.actAs",
+    "run.operations.get",
     "run.routes.invoke",
     "run.services.create",
     "run.services.list",
