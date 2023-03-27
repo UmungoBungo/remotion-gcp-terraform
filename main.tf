@@ -62,3 +62,9 @@ resource "google_project_iam_member" "tf_remotion_sa" {
   role    = google_project_iam_custom_role.tf_sa_role.id
   member  = "serviceAccount:${google_service_account.tf_remotion_sa.email}"
 }
+
+# Enable Cloud Run API
+resource "google_project_service" "cloud_run" {
+  project = "{{project-id}}"
+  service = "run.googleapis.com"
+}
