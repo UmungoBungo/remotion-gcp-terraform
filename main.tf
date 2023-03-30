@@ -63,6 +63,12 @@ resource "google_project_service" "cloud_run" {
   service = "run.googleapis.com"
 }
 
+# Enable Cloud Resource Manager
+resource "google_project_service" "cloud_resource_manager" {
+  project = var.project_id
+  service = "cloudresourcemanager.googleapis.com"
+}
+
 # Output the command to generate service account keys
 output "service_account_key_generation_command" {
   value = "gcloud iam service-accounts keys create key.json --iam-account=${google_service_account.remotion_sa.email}"
