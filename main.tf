@@ -21,12 +21,12 @@ provider "google" {
   zone    = "us-central1-c"
 }
 
-data "file" "permissionsjson" {
+data "local_file" "permissionsjson" {
   filename = "permissions.json"
 }
 
 locals {
-  permissions = jsondecode(permissionsjson.file.permissions)
+  permissions = jsondecode(data.local_file.permissionsjson.permissions)
 }
 
 
