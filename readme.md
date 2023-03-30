@@ -2,6 +2,13 @@
 
 https://github.com/hashicorp/terraform-getting-started-gcp-cloud-shell/blob/master/tutorial/cloudshell_tutorial.md
 
+## Permission explanations for APIs
+
+- run.googleapis.com
+  Cloud Run API
+- cloudresourcemanager.googleapis.com
+  Cloud Resource Manager API
+
 ## Permission explanations for Service Account role
 
 - iam.serviceAccounts.actAs
