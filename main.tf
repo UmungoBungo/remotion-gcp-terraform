@@ -21,21 +21,16 @@ provider "google" {
   zone    = "us-central1-c"
 }
 
-data "local_file" "permissionsjson" {
-  filename = "permissions.json"
-}
-
 locals {
-  permissions = jsondecode(data.local_file.permissionsjson)
+  permissions = jsondecode(file("${path.module}/permissions.json"))
 }
-
 
 # Create an IAM role
 resource "google_project_iam_custom_role" "remotion_sa" {
   role_id     = "RemotionSA"
   title       = "Remotion API Service Account"
   description = "Allow the service account to manage necessary resources for Remotion Cloud Run rendering."
-  permissions = local.permissions.permissions
+  permissions = local.permissions.list
 }
 
 # Create a service account
