@@ -26,7 +26,7 @@ data "local_file" "permissionsjson" {
 }
 
 locals {
-  permissions = jsondecode(data.local_file.permissionsjson.permissions)
+  permissions = jsondecode(data.local_file.permissionsjson)
 }
 
 
@@ -35,7 +35,7 @@ resource "google_project_iam_custom_role" "remotion_sa" {
   role_id     = "RemotionSA"
   title       = "Remotion API Service Account"
   description = "Allow the service account to manage necessary resources for Remotion Cloud Run rendering."
-  permissions = local.permissions
+  permissions = local.permissions.permissions
 }
 
 # Create a service account
